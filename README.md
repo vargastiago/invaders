@@ -57,3 +57,5 @@ space-invaders/
 - **R**: reiniciar após o game over
 
 ## 📸 Capturas de Tela
+
+![Invaders Gameplay](screenshots/screenshot.png)
