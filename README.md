@@ -58,4 +58,4 @@ space-invaders/
 
 ## 📸 Capturas de Tela
 
-![Invaders Gameplay](screenshots/screenshot.png)
+![Invaders Gameplay](./screenshots/screenshot.png)
