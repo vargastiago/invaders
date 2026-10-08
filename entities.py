@@ -26,7 +26,8 @@ class Ship:
     def shoot(self):
         if len(self.game.bullets) < MAX_BULLETS:
             self.game.bullets.add(Bullet(self.game))
-            self.game.shoot_sound.play()
+            if self.game.shoot_sound is not None:
+                self.game.shoot_sound.play()
 
 
 class Bullet(Sprite):

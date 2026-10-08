@@ -14,15 +14,21 @@ INVADER_SHOOT_EVENT = pygame.USEREVENT + 1
 class Game:
     def __init__(self):
         pygame.init()
-        pygame.mixer.init()
+        try:
+            pygame.mixer.init()
+        except pygame.error as error:
+            print(f'Audio unavailable; continuing without sound: {error}', file=sys.stderr)
 
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pygame.display.set_caption('Invaders')
         self.clock = pygame.time.Clock()
 
         self.font = pygame.font.SysFont(None, 36)
-        self.shoot_sound = pygame.mixer.Sound('sounds/shoot.wav')
-        self.explosion_sound = pygame.mixer.Sound('sounds/explosion.wav')
+        self.shoot_sound = None
+        self.explosion_sound = None
+        if pygame.mixer.get_init():
+            self.shoot_sound = pygame.mixer.Sound('sounds/shoot.wav')
+            self.explosion_sound = pygame.mixer.Sound('sounds/explosion.wav')
 
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
@@ -99,7 +105,8 @@ class Game:
 
         collisions = pygame.sprite.groupcollide(self.bullets, self.invaders, True, True)
         if collisions:
-            self.explosion_sound.play()
+            if self.explosion_sound is not None:
+                self.explosion_sound.play()
             for hit_list in collisions.values():
                 self.score += len(hit_list) * 10
 
